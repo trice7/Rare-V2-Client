@@ -5,10 +5,12 @@ export default function PostCard({ post }) {
     <div className="post-card">
       <img className="post-card-img" src="{post.image_url}" />
       <Link passHref href={`posts/${post.id}`}>
-        <h3 className="post-card-title">post.title</h3>
+        <h3 className="post-card-title">{post.title}</h3>
       </Link>
       <p className="post-card-category">{post.category.label}</p>
-      <p className="post-card-author">{post.user.first_name} {post.user.last_names}</p>
+      {/* <p className="post-card-author">
+        {post.user.username}
+      </p> */}
     </div>
   );
 }

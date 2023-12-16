@@ -5,7 +5,7 @@ const dbUrl = clientCredentials.databaseURL;
 
 const getAllPosts = async () => {
   try {
-    const { data } = await axios.get(`${databaseURL}/posts`);
+    const { data } = await axios.get(`${dbUrl}/posts`);
     if (data.length > 0) {
       return data;
     }
