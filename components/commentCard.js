@@ -12,9 +12,11 @@ export default function CommentCard({ comment, setPost }) {
   const [editing, setEditing] = useState(false);
 
   const handleCommentDelete = () => {
-    deleteComment(comment.id)
-      .then(() => getSinglePost(comment.post))
-      .then(setPost);
+    if (window.confirm(`Delete your comment?`)) {
+      deleteComment(comment.id)
+        .then(() => getSinglePost(comment.post))
+        .then(setPost);
+    }
   };
 
   const handleEditing = () => {

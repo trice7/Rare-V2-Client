@@ -24,11 +24,13 @@ export default function CommentBox({ postId, comment, setEditing, setPost, handl
     if (comment && comment.id) {
       updateComment(comment.id, commentPayload)
         .then(setEditing(false))
+        .then(setCommentText(''))
         .then(() => {
           getSinglePost(postId).then(setPost);
         });
     } else {
-      createComment(commentPayload);
+      await createComment(commentPayload);
+      setCommentText('');
       getSinglePost(postId).then(setPost);
     }
   };

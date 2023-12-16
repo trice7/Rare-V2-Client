@@ -25,14 +25,14 @@ export default function PostForm({ postObj }) {
   });
 
   useEffect(() => {
-    if (postObj.id) {
+    if (postObj && postObj.id) {
       setFormData({ categoryId: postObj.category.id, uid: user.uid, title: postObj.title, imageUrl: postObj.image_url, content: postObj.content, approved: true });
     }
-  }, [postObj.id]);
+  }, [postObj]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (postObj.id) {
+    if (postObj && postObj.id) {
       await updatePost(postObj.id, formData);
       router.push('/');
     } else {
@@ -64,7 +64,7 @@ export default function PostForm({ postObj }) {
         </Form.Select>
       </Form.Group>
       <Button variant="primary" type="submit">
-        {postObj.id ? 'Update' : 'Submit'}
+        {postObj?.id ? 'Update' : 'Submit'}
       </Button>
     </Form>
   );
