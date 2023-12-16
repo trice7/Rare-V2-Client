@@ -13,7 +13,7 @@ const createComment = async (payload) => {
   }
 };
 
-const updateComment = async (id) => {
+const updateComment = async (id, payload) => {
   try {
     const response = await axios.put(`${dbUrl}/comments/${id}`, payload);
     return response;

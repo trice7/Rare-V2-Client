@@ -5,6 +5,7 @@ import CommentCard from '../../components/commentCard';
 import { useAuth } from '../../utils/context/authContext';
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
+import CommentBox from '../../components/commentBox';
 
 export default function ViewPost() {
   const router = useRouter();
@@ -30,16 +31,18 @@ export default function ViewPost() {
         ''
       )}
       <p className="view-post-author">{/* Created By: {post.user.username} on {post.publication_date} */}</p>
-      {post.comments && post.comments.map((comment) => <CommentCard comment={comment} />)}
+
       <div className="view-post-tags">
         {post.tags?.map((tag) => {
           return (
-            <p key={`tag${tag.id}`} className="view-post-tag">
+            <p key={`key${tag.id}`} className="view-post-tag">
               {tag.label}
             </p>
           );
         })}
       </div>
+      <CommentBox setPost={setPost} postId={post_id} />
+      {post.comments && post.comments.map((comment) => <CommentCard setPost={setPost} key={`comment${comment.id}`} comment={comment} />)}
     </div>
   );
 }
