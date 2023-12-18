@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Button } from 'react-bootstrap';
 
 export default function PostCard({ post }) {
   return (

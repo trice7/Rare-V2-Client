@@ -49,7 +49,7 @@ const createPost = async (payload) => {
   }
 };
 
-const updatePost = async (id) => {
+const updatePost = async (id, payload) => {
   try {
     const response = await axios.put(`${dbUrl}/posts/${id}`, payload);
     return response;
