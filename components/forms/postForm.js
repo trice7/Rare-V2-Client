@@ -3,16 +3,34 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { getAllCategories } from '../../utils/data/categoryData';
 import { useAuth } from '../../utils/context/authContext';
-import { createPost, updatePost } from '../../utils/data/postData';
+import { createPost, getAllPosts, updatePost } from '../../utils/data/postData';
 import { useRouter } from 'next/router';
+import { getAllTags } from '../../utils/data/tagData';
+import { createPostTag, deletePostTag } from '../../utils/data/postTagsData';
 
 export default function PostForm({ postObj }) {
   const { user } = useAuth();
   const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [checkedTags, setCheckedTags] = useState([]);
+  const [post, setPosts] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     getAllCategories().then(setCategories);
+  }, []);
+
+  useEffect(() => {
+    getAllPosts().then(setPosts);
+  }, []);
+
+  useEffect(() => {
+    getAllTags().then(setTags);
+    const checkedTagsArr = [];
+    tags.forEach(() => {
+      checkedTagsArr.push('false');
+    });
+    setCheckedTags(checkedTagsArr);
   }, []);
 
   const [formData, setFormData] = useState({
@@ -24,6 +42,8 @@ export default function PostForm({ postObj }) {
     approved: true,
   });
 
+  // const [currentPostTags, setCurrentPostTags] = useState([]);
+
   useEffect(() => {
     if (postObj && postObj.id) {
       setFormData({ categoryId: postObj.category.id, uid: user.uid, title: postObj.title, imageUrl: postObj.image_url, content: postObj.content, approved: true });
@@ -32,14 +52,37 @@ export default function PostForm({ postObj }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const tagsArr = checkedTags.map((tag, index) => {
+      if (tag === true) {
+        return index;
+      }
+    });
     if (postObj && postObj.id) {
       await updatePost(postObj.id, formData);
+      // const existingPostTagIds = postObj.tags.map((postTag) => {
+      //   return postTag.id
+      // })
+      // postObj.tags.forEach((tag) => {
+      //   tagsArr.forEach((tagId) => {
+      //     if(!tagsArr.includes(tag.tag)) {
+      //       deletePostTag
+      //     }
+      //   })
+      // })
       router.push('/');
     } else {
+      tagsArr.forEach(async (tag) => {
+        await createPostTag({ post: post.length + 1, tag });
+      });
       createPost(formData).then(() => {
         router.push(`/`);
       });
     }
+  };
+
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) => (index === position ? !item : item));
+    setCheckedTags(updatedCheckedState);
   };
 
   return (
@@ -62,6 +105,17 @@ export default function PostForm({ postObj }) {
               );
             })}
         </Form.Select>
+        <legend>Post tags</legend>
+        <div className="post-tags-checkboxes">
+          {tags.map(({ id, label }, index) => {
+            return (
+              <>
+                <input type="checkbox" id={id} value={id} name="postTags" checked={checkedTags[index]} onChange={handleOnChange(index)} />
+                <label for={label}>{label}</label>
+              </>
+            );
+          })}
+        </div>
       </Form.Group>
       <Button variant="primary" type="submit">
         {postObj?.id ? 'Update' : 'Submit'}
