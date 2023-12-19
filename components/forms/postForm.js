@@ -26,12 +26,15 @@ export default function PostForm({ postObj }) {
 
   useEffect(() => {
     getAllTags().then(setTags);
+  }, []);
+
+  useEffect(() => {
     const checkedTagsArr = [];
     tags.forEach(() => {
-      checkedTagsArr.push('false');
+      checkedTagsArr.push(false);
     });
     setCheckedTags(checkedTagsArr);
-  }, []);
+  }, [tags]);
 
   const [formData, setFormData] = useState({
     categoryId: 1,
@@ -71,17 +74,18 @@ export default function PostForm({ postObj }) {
       // })
       router.push('/');
     } else {
-      tagsArr.forEach(async (tag) => {
-        await createPostTag({ post: post.length + 1, tag });
-      });
-      createPost(formData).then(() => {
-        router.push(`/`);
+      createPost(formData).then((res) => {
+        tagsArr.forEach(async (tag) => {
+          await createPostTag({ postId: res.data.id, tagId: tag });
+        });
+      }).then(() => {
+        router.push('/');
       });
     }
   };
 
   const handleOnChange = (position) => {
-    const updatedCheckedState = checkedState.map((item, index) => (index === position ? !item : item));
+    const updatedCheckedState = checkedTags.map((item, index) => (index === position ? !item : item));
     setCheckedTags(updatedCheckedState);
   };
 
@@ -110,7 +114,7 @@ export default function PostForm({ postObj }) {
           {tags.map(({ id, label }, index) => {
             return (
               <>
-                <input type="checkbox" id={id} value={id} name="postTags" checked={checkedTags[index]} onChange={handleOnChange(index)} />
+                <input type="checkbox" id={id} value={id} name="postTags" checked={checkedTags[index]} onChange={() => handleOnChange(index)} />
                 <label for={label}>{label}</label>
               </>
             );
