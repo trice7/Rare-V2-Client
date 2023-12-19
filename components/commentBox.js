@@ -1,10 +1,17 @@
 import { Button } from 'react-bootstrap';
-import { createComment, updateComment } from '../utils/data/commentData';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { createComment, updateComment } from '../utils/data/commentData';
 import { useAuth } from '../utils/context/authContext';
 import { getSinglePost } from '../utils/data/postData';
 
-export default function CommentBox({ postId, comment, setEditing, setPost, handleCommentDelete }) {
+export default function CommentBox({
+  postId,
+  comment,
+  setEditing,
+  setPost,
+  handleCommentDelete,
+}) {
   const [commentText, setCommentText] = useState('');
   const { user } = useAuth();
 
@@ -51,3 +58,14 @@ export default function CommentBox({ postId, comment, setEditing, setPost, handl
     </div>
   );
 }
+
+CommentBox.propTypes = {
+  comment: PropTypes.shape({
+    id: PropTypes.number,
+    content: PropTypes.string,
+  }).isRequired,
+  postId: PropTypes.number.isRequired,
+  setEditing: PropTypes.func.isRequired,
+  setPost: PropTypes.func.isRequired,
+  handleCommentDelete: PropTypes.func.isRequired,
+};

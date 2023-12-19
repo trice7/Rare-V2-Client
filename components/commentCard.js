@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
+import { useState } from 'react';
 import CommentBox from './commentBox';
 import { useAuth } from '../utils/context/authContext';
-import { useState } from 'react';
 import { deleteComment } from '../utils/data/commentData';
 import { getSinglePost } from '../utils/data/postData';
 
@@ -12,7 +13,7 @@ export default function CommentCard({ comment, setPost }) {
   const [editing, setEditing] = useState(false);
 
   const handleCommentDelete = () => {
-    if (window.confirm(`Delete your comment?`)) {
+    if (window.confirm('Delete your comment?')) {
       deleteComment(comment.id)
         .then(() => getSinglePost(comment.post))
         .then(setPost);
@@ -53,3 +54,13 @@ export default function CommentCard({ comment, setPost }) {
     </>
   );
 }
+
+CommentCard.propTypes = {
+  comment: PropTypes.shape({
+    post: PropTypes.number,
+    author: PropTypes.number,
+    content: PropTypes.string,
+    id: PropTypes.number,
+  }).isRequired,
+  setPost: PropTypes.func.isRequired,
+};
