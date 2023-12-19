@@ -27,7 +27,7 @@ export default function NavBar() {
               <Nav.Link>Home</Nav.Link>
             </Link>
             {user.admin && (
-              <Link passHref href="/category">
+              <Link passHref href="/categories/category">
                 <Nav.Link>Categories</Nav.Link>
               </Link>
             )}

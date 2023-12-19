@@ -17,7 +17,6 @@ function CategoryCard({ category, onUpdate }) {
     <Card>
       <Card.Body>{category.label}</Card.Body>
       <Card.Footer>
-        <Button variant="warning">Edit</Button>
         <Button variant="danger" onClick={deleteSingleCategory}>Delete</Button>
       </Card.Footer>
     </Card>

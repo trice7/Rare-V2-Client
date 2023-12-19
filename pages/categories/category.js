@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getAllCategories } from '../utils/data/categoryData';
-import CategoryCard from '../components/categoryCard';
+import { Button } from 'react-bootstrap';
+import Link from 'next/link';
+import { getAllCategories } from '../../utils/data/categoryData';
+import CategoryCard from '../../components/categoryCard';
 
 function Category() {
   const [categories, setCategories] = useState([]);
@@ -15,6 +17,10 @@ function Category() {
 
   return (
     <div>
+      <h3>Categories</h3>
+      <Link passHref href="/categories/new">
+        <Button>Create Category</Button>
+      </Link>
       {categories.map((category) => <CategoryCard key={category.id} category={category} onUpdate={getCategories} />)}
     </div>
   );
