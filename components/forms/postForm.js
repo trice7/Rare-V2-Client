@@ -70,7 +70,7 @@ export default function PostForm({ postObj }) {
     } else {
       createPost(formData).then((res) => {
         tagsArr.forEach(async (tag) => {
-          await createPostTag({ postId: res.data.id, tagId: tag });
+          await createPostTag({ postId: res.data.id, tagId: tag + 1 });
         });
       }).then(() => {
         router.push('/');
