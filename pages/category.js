@@ -3,15 +3,19 @@ import { getAllCategories } from '../utils/data/categoryData';
 import CategoryCard from '../components/categoryCard';
 
 function Category() {
-  const [categoies, setCategoies] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  const getCategories = () => {
+    getAllCategories().then((data) => setCategories(data));
+  };
 
   useEffect(() => {
-    getAllCategories().then(setCategoies);
+    getCategories();
   }, []);
 
   return (
     <div>
-      {categoies.map((category) => <CategoryCard category={category} />)}
+      {categories.map((category) => <CategoryCard key={category.id} category={category} onUpdate={getCategories} />)}
     </div>
   );
 }
