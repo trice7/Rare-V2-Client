@@ -45,7 +45,7 @@ export default function ViewPost() {
               <Link passHref href={`/posts/edit/${post.id}`}>
                 <PencilFill type="button" />
               </Link>
-              <XCircle type="button" onClick={handleDelete} />
+              <XCircle className="del-svg" type="button" onClick={handleDelete} />
             </>
           ) : (
             ''

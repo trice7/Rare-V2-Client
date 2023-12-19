@@ -38,7 +38,7 @@ export default function CommentCard({ comment, setPost }) {
             {user.id === comment.author ? (
               <>
                 <div className="comment-buttons">
-                  <XCircle type="button" onClick={handleCommentDelete} />
+                  <XCircle className="del-svg" type="button" onClick={handleCommentDelete} />
                   <PencilFill type="button" onClick={handleEditing} />
                 </div>
               </>
