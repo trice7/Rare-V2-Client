@@ -6,7 +6,7 @@ import { useAuth } from '../../utils/context/authContext';
 import { createPost, getAllPosts, updatePost } from '../../utils/data/postData';
 import { useRouter } from 'next/router';
 import { getAllTags } from '../../utils/data/tagData';
-import { createPostTag, deletePostTag } from '../../utils/data/postTagsData';
+import { createPostTag, deletePostTag, getAndDeleteAllPostTagsByPostId } from '../../utils/data/postTagsData';
 
 export default function PostForm({ postObj }) {
   const { user } = useAuth();
@@ -62,16 +62,10 @@ export default function PostForm({ postObj }) {
     });
     if (postObj && postObj.id) {
       await updatePost(postObj.id, formData);
-      // const existingPostTagIds = postObj.tags.map((postTag) => {
-      //   return postTag.id
-      // })
-      // postObj.tags.forEach((tag) => {
-      //   tagsArr.forEach((tagId) => {
-      //     if(!tagsArr.includes(tag.tag)) {
-      //       deletePostTag
-      //     }
-      //   })
-      // })
+      await getAndDeleteAllPostTagsByPostId(postObj.id);
+      tagsArr.forEach(async (tag) => {
+        await createPostTag({ postId: postObj.id, tagId: tag + 1 });
+      });
       router.push('/');
     } else {
       createPost(formData).then((res) => {

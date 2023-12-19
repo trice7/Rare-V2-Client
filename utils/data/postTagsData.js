@@ -23,4 +23,17 @@ const deletePostTag = async (id) => {
   }
 };
 
-export { createPostTag, deletePostTag };
+const getAndDeleteAllPostTagsByPostId = async (id) => {
+  try {
+    const { data } = await axios.get(`${dbUrl}/posttags?post_id=${id}`);
+    data.forEach(async (postTag) => {
+      await deletePostTag(postTag.id);
+    });
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return 'deletePostTag failed';
+  }
+};
+
+export { createPostTag, deletePostTag, getAndDeleteAllPostTagsByPostId };
