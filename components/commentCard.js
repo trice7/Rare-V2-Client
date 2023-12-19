@@ -1,7 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
+import { XCircle, PencilFill } from 'react-bootstrap-icons';
 import CommentBox from './commentBox';
 import { useAuth } from '../utils/context/authContext';
 import { deleteComment } from '../utils/data/commentData';
@@ -36,12 +37,10 @@ export default function CommentCard({ comment, setPost }) {
             <Card.Body>{/* Created by: <strong>{comment.author.username}</strong> on <em>{comment.created_on}</em> */}</Card.Body>
             {user.id === comment.author ? (
               <>
-                <Button size="sm" variant="danger" onClick={handleCommentDelete}>
-                  Delete
-                </Button>
-                <Button size="sm" variant="primary" onClick={handleEditing}>
-                  Edit
-                </Button>
+                <div className="comment-buttons">
+                  <XCircle type="button" onClick={handleCommentDelete} />
+                  <PencilFill type="button" onClick={handleEditing} />
+                </div>
               </>
             ) : (
               ''

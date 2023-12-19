@@ -1,8 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable camelcase */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Button, Card, Stack } from 'react-bootstrap';
+import { Card, Stack } from 'react-bootstrap';
 import Link from 'next/link';
+import { PencilFill, XCircle } from 'react-bootstrap-icons';
 import TagBox from '../../components/TagBadge';
 import { deletePost, getSinglePost } from '../../utils/data/postData';
 import CommentCard from '../../components/commentCard';
@@ -41,13 +43,9 @@ export default function ViewPost() {
           {post.user?.id === user.id ? (
             <>
               <Link passHref href={`/posts/edit/${post.id}`}>
-                <Button type="button" variant="primary">
-                  Edit
-                </Button>
+                <PencilFill type="button" />
               </Link>
-              <Button variant="danger" onClick={handleDelete}>
-                Delete
-              </Button>
+              <XCircle type="button" onClick={handleDelete} />
             </>
           ) : (
             ''
