@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Stack } from 'react-bootstrap';
 import Link from 'next/link';
+import TagBox from '../../components/TagBadge';
 import { deletePost, getSinglePost } from '../../utils/data/postData';
 import CommentCard from '../../components/commentCard';
 import { useAuth } from '../../utils/context/authContext';
@@ -52,16 +53,23 @@ export default function ViewPost() {
             ''
           )}
         </Card.Body>
+        <Card.Footer>
+          <Stack direction="horizontal" gap={2}>
+            {post.tags?.map((tag) => (
+              <TagBox key={tag.id} tag={tag} />
+            ))}
+          </Stack>
+        </Card.Footer>
       </Card>
       <p className="view-post-author">{/* Created By: {post.user.username} on {post.publication_date} */}</p>
 
-      <div className="view-post-tags">
+      {/* <div className="view-post-tags">
         {post.tags?.map((tag) => (
           <p key={`key${tag.id}`} className="view-post-tag">
             {tag.label}
           </p>
         ))}
-      </div>
+      </div> */}
       <CommentBox setPost={setPost} postId={post_id} />
       {post.comments && post.comments.map((comment) => <CommentCard setPost={setPost} key={`comment${comment.id}`} comment={comment} />)}
     </div>
