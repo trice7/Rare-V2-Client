@@ -1,8 +1,10 @@
-import { Button } from 'react-bootstrap';
+/* eslint-disable import/no-extraneous-dependencies */
+import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
+import { useState } from 'react';
+import { XCircle, PencilFill } from 'react-bootstrap-icons';
 import CommentBox from './commentBox';
 import { useAuth } from '../utils/context/authContext';
-import { useState } from 'react';
 import { deleteComment } from '../utils/data/commentData';
 import { getSinglePost } from '../utils/data/postData';
 
@@ -12,7 +14,7 @@ export default function CommentCard({ comment, setPost }) {
   const [editing, setEditing] = useState(false);
 
   const handleCommentDelete = () => {
-    if (window.confirm(`Delete your comment?`)) {
+    if (window.confirm('Delete your comment?')) {
       deleteComment(comment.id)
         .then(() => getSinglePost(comment.post))
         .then(setPost);
@@ -35,12 +37,10 @@ export default function CommentCard({ comment, setPost }) {
             <Card.Body>{/* Created by: <strong>{comment.author.username}</strong> on <em>{comment.created_on}</em> */}</Card.Body>
             {user.id === comment.author ? (
               <>
-                <Button size="sm" variant="danger" onClick={handleCommentDelete}>
-                  Delete
-                </Button>
-                <Button size="sm" variant="primary" onClick={handleEditing}>
-                  Edit
-                </Button>
+                <div className="comment-buttons">
+                  <XCircle className="del-svg" type="button" onClick={handleCommentDelete} />
+                  <PencilFill type="button" onClick={handleEditing} />
+                </div>
               </>
             ) : (
               ''
@@ -53,3 +53,13 @@ export default function CommentCard({ comment, setPost }) {
     </>
   );
 }
+
+CommentCard.propTypes = {
+  comment: PropTypes.shape({
+    post: PropTypes.number,
+    author: PropTypes.number,
+    content: PropTypes.string,
+    id: PropTypes.number,
+  }).isRequired,
+  setPost: PropTypes.func.isRequired,
+};

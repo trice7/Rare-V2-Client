@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getSinglePost } from '../../../utils/data/postData';

@@ -17,9 +17,46 @@ a {
 }
 
 body {
-  background-color: #88effd;
+  background-color: #f9f1f1;
 }
 
 .view-post-img {
   max-width: 50%;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+}
+
+.post-card-img {
+  width: 150px;
+  height: 100px;
+}
+
+.logo-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.title-button {
+  height: 40px;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: row;
+}
+
+.post-container {
+  margin-bottom: 15px;
+}
+
+.view-post {
+  margin-top: 20px;
+}
+
+.del-svg {
+  color: #FF0000;
 }
