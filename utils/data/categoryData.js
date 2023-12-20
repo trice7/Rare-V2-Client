@@ -16,4 +16,24 @@ const getAllCategories = async () => {
   }
 };
 
-export { getAllCategories };
+const deleteCategory = async (id, userId) => {
+  try {
+    const response = await axios.delete(`${databaseURL}/categories/${id}`, { headers: { Authorization: `${userId}` } });
+    return response;
+  } catch (e) {
+    console.warn(e);
+    return 'delete Category failed';
+  }
+};
+
+const createCategory = async (payload, userId) => {
+  try {
+    const response = await axios.post(`${databaseURL}/categories`, payload, { headers: { Authorization: `${userId}` } });
+    return response;
+  } catch (e) {
+    console.warn(e);
+    return 'create Category failed';
+  }
+};
+
+export { getAllCategories, deleteCategory, createCategory };
